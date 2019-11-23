@@ -8,6 +8,7 @@
     <title>个人博客</title>
     <link rel="stylesheet" href="./css/base.css">
     <link rel="stylesheet" href="./css/index.css">
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
 </head>
 
 <body>
@@ -15,7 +16,7 @@
         <div class="container">
             <a class="title">我的个人博客 | 技术博客</a>
             <ul class="menu">
-                <li><a href="">首页</a></li>
+                <li><a href="./index.html">首页</a></li>
                 <li><a href="./sitemap.html">地图</a></li>
                 <li><a href="./about.html">关于</a></li>
                 <li><a href="./guestbook.html">留言</a></li>
@@ -28,48 +29,39 @@
     </header>
     <div class="content">
         <div class="content_left">
-            <div class="every_day">
+            <div class="every_day" id="every_day">
                 <span>每日一句</span>
-                <p>好的老师会激励你，给你带来欢乐，悄然无声地教会你很多东西。</p>
+                <p>{{content}}</p>
                 <p>———— Nicholas Sparks</p>
             </div>
-            <div class="article_list">
-                <div class="article">
-                    <a href="/" class="article_title">php 验证身份证号</a>
-                    <p class="article_content">转载，PHP验证身份证号的正确性，使用了正则验证身份证号中的省市数据、出生日期，验证尾号识别码。private function
-                        is_idcard($vStr) { $vCity = array('11', '12', '13', '14', '15', '21', '22', '23', '31', '32',
-                        '33', '34', '35', '36', '37', '41', '42', '43', &nbs...</p>
-                    <div class="article_foot">发布于2019-09-21 | 浏览(979) | Tags：</div>
+            <div class="article_list" id="article_list">
+                <div class="article" v-for="article in articleList">
+                    <a v:bind:href="article.link" class="article_title">{{article.title}}</a>
+                    <p class="article_content">{{article.content}}</p>
+                    <div class="article_foot">发布于{{article.date}} | 浏览({{article.views}}) | Tags：{{article.tags}}</div>
                 </div>
             </div>
         </div>
         <div class="content_right">
-            <div class="right_module">
+            <div class="right_module" id="random_tags">
                 <div>随机标签云</div>
-                <a href="">156</a>
-                <a href="">4rf</a>
-                <a href="">dgv</a>
-                <a href="">gfg</a>
+                <a v-for="tag in tags" v-bind:style="{color:randomColor(),fontSize:randomSize()}">{{tag}}</a>
             </div>
-            <div class="right_module">
+            <div class="right_module" id="new_hot">
                 <div>最近热门</div>
                 <ul>
-                    <li><a href="">Lorem ipsum dolor sit.</a></li>
-                    <li><a href="">Lorem ipsum dolor sit.</a></li>
-                    <li><a href="">Lorem ipsum dolor sit.</a></li>
-                    <li><a href="">Lorem ipsum dolor sit.</a></li>
-                    <li><a href="">Lorem ipsum dolor sit.</a></li>
+                    <li v-for="temp in titleList"><a v-bind:href="temp.link">{{temp.title}}</a></li>
                 </ul>
             </div>
-            <div class="right_module">
+            <div class="right_module" id="new_comments">
                 <div>最新评论</div>
                 <ul>
-                    <li>
+                    <li v-for="comment in commentList">
                         <div>
-                            <span>这里是用户名</span>
-                            <span class="pull_right">这里是时间</span>
+                            <span>{{comment.name}}</span>
+                            <span class="pull_right">{{comment.date}}</span>
                         </div>
-                        <p>Lorem ipsum dolor sit amet.</p>
+                        <p>{{comment.comment}}</p>
                     </li>
                 </ul>
             </div>
@@ -102,6 +94,8 @@
         </ul>
         <p>CopyRight ©2019-2022 个人技术博客</p>
     </footer>
+    <script src="./js/index.js"></script>
+    <script src="./js/base.js"></script>
 </body>
 
 </html>
