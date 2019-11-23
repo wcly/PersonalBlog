@@ -1,0 +1,11 @@
+{
+  "name": "PersonalBlog",
+  "version": "1.0.0",
+  "main": "index.js",
+  "repository": "https://github.com/wcly/PersonalBlog.git",
+  "author": "wcly <git@github.com:wcly>",
+  "license": "MIT",
+  "dependencies": {
+    "express": "^4.17.1"
+  }
+}
