@@ -1,9 +1,15 @@
-var express = require("express");
+const express = require("express");
+const globalConfig = require('./config');
+const loader = require('./loader');
 
-var app = new express();
+const app = new express();
 
 app.use(express.static('./page/'));
 
-app.listen(8080, function(){
+app.post('/editEveryDay', loader.get('/editEveryDay'));
+
+app.get('/queryEveryDay', loader.get('/queryEveryDay'));
+
+app.listen(globalConfig.port, function(){
     console.log("服务器已启动");
 });

@@ -20,10 +20,23 @@
   <script src="http://netdna.bootstrapcdn.com/twitter-bootstrap/2.3.1/js/bootstrap.min.js"></script>
   <script src="./bootstrap-wysiwyg/external/google-code-prettify/prettify.js"></script>
   <link href="./bootstrap-wysiwyg/index.css" rel="stylesheet">
-  <script src="bootstrap-wysiwyg.js"></script>
+  <script src="./bootstrap-wysiwyg/bootstrap-wysiwyg.js"></script>
   <script>
     function submit() {
         var content = $('#editor').html();
+        $.ajax({
+          url: '/editEveryDay',
+          method: 'post',
+          data: content,
+          success: function(res){
+            var result = JSON.parse(res);
+            alert(result.msg);
+            $('#editor').html('');
+          },
+          error: function(err){
+            console.log(err)
+          }
+        })
     }
   </script>
   <style>

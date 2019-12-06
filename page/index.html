@@ -9,6 +9,7 @@
     <link rel="stylesheet" href="./css/base.css">
     <link rel="stylesheet" href="./css/index.css">
     <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+    <script src="https://cdn.bootcss.com/axios/0.19.0-beta.1/axios.js"></script>
 </head>
 
 <body>
@@ -32,7 +33,7 @@
             <div class="every_day" id="every_day">
                 <span>每日一句</span>
                 <p>{{content}}</p>
-                <p>———— Nicholas Sparks</p>
+                <!-- <p>———— Nicholas Sparks</p> -->
             </div>
             <div class="article_list" id="article_list">
                 <div class="article" v-for="article in articleList">
