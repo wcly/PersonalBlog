@@ -23,21 +23,35 @@
   <script src="./bootstrap-wysiwyg/bootstrap-wysiwyg.js"></script>
   <script>
     function submit() {
-        var content = $('#editor').html();
-        var title = $('#title').html();
-        var tags = $('#tags').html();
+      var content = $('#editor').html();
+      var title = $('#title').val();
+      var tags = $('#tags').val();
+      console.log(content,title,tags)
+      $.ajax({
+        url: `/editBlog?title=${title}&tags=${tags}`,
+        method: 'post',
+        data: content,
+        success: function (res) {
+          var result = JSON.parse(res);
+          alert(result.msg);
+          $('#editor').html('');
+        },
+        error: function (err) {
+          console.log(err)
+        }
+      })
     }
   </script>
   <style>
-      .submit{
-          width: 200px;
-          height: 50px;
-          margin-top: 20px;
-          background: gray;
-          color: #fff;
-          border-radius: 5px;
-          border: 1px solid gray;
-      }
+    .submit {
+      width: 200px;
+      height: 50px;
+      margin-top: 20px;
+      background: gray;
+      color: #fff;
+      border-radius: 5px;
+      border: 1px solid gray;
+    }
   </style>
 </head>
 

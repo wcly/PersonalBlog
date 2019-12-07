@@ -18,7 +18,6 @@ function editEveryDay(request, response) {
 path.set('/editEveryDay', editEveryDay);
 
 function queryEveryDay(request, response) {
-    console.log('111')
     everyDayDao.queryEveryDay(function (result) {
         response.writeHead(200, {
             'Content-Type': 'text/plain;charset=UTF-8'
