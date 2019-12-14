@@ -204,3 +204,29 @@ body {
     margin-top: 10px;
     color: #a2a2a2;
 }
+
+.page_tool {
+    margin-top: 20px;
+    display: inline-block;
+}
+
+.page_tool>ul>li {
+    display: inline-block;
+    list-style: none;
+    width: 40px;
+    height: 30px;
+    line-height: 30px;
+    text-align: center;
+    border: 1px solid black;
+    cursor: pointer;
+    background: #fff;
+}
+
+.page_tool>ul>li:hover{
+    background: gray;
+}
+
+.now_page{
+    background: #333 !important;
+    color: #fff !important;
+}

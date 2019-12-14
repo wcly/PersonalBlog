@@ -7,13 +7,41 @@ const url = require("url");
 
 const path = new Map();
 
+function queryBlogCount(request, response){
+    blogDao.queryBlogByCount(function(result){
+        response.writeHead(200, {
+            "Content-Type": "text/plain;charset=UTF-8"
+        });
+        response.write(respUtil.writeResult('success', '添加成功', result));
+        response.end();
+    })
+}
+
+path.set("/queryBlogCount",queryBlogCount);
+
+function queryBlogByPage(request, response) {
+    const params = url.parse(request.url, true).query;
+    blogDao.queryBlogByPage(parseInt(params.page), parseInt(params.pageSize), function(result){
+        for(let i = 0; i < result.length; i++){
+            result[i].content = result[i].content.replace(/<img[\w\W]*">/, "");
+        }
+        response.writeHead(200, {
+            "Content-Type": "text/plain;charset=UTF-8"
+        });
+        response.write(respUtil.writeResult("success", "查询成功", result));
+        response.end();
+    })
+}
+
+path.set('/queryBlogByPage', queryBlogByPage);
+
 function editBlog(request, response) {
     const params = url.parse(request.url, true).query;
     var tags = params.tags.replace(/ /g, "").replace("，", ",");
     request.on("data", function (data) {
         blogDao.insertBlog(params.title, data.toString(), tags, 0, timeUtil.getNow(), timeUtil.getNow(), function (result) {
             response.writeHead(200, {
-                "Content-Type": "text/plain;chatset=UTF-8"
+                "Content-Type": "text/plain;charset=UTF-8"
             });
             response.write(respUtil.writeResult('success', '添加成功', null));
             response.end();

@@ -12,6 +12,10 @@ app.get('/queryEveryDay', loader.get('/queryEveryDay'));
 
 app.post('/editBlog', loader.get('/editBlog'));
 
-app.listen(globalConfig.port, function(){
+app.get('/queryBlogByPage', loader.get('/queryBlogByPage'));
+
+app.get('/queryBlogCount', loader.get('/queryBlogCount'));
+
+app.listen(globalConfig.port, function () {
     console.log("服务器已启动");
 });
