@@ -7,8 +7,21 @@ const url = require("url");
 
 const path = new Map();
 
-function queryBlogCount(request, response){
-    blogDao.queryBlogByCount(function(result){
+function queryBlogById(request, response) {
+    const params = url.parse(request.url, true).query;
+    blogDao.queryBlogById(parseInt(params.bid), function (result) {
+        response.writeHead(200, {
+            "Content-Type": "text/plain;charset=UTF-8"
+        });
+        response.write(respUtil.writeResult('success', '查询成功', result));
+        response.end();
+    })
+}
+
+path.set("/queryBlogById", queryBlogById);
+
+function queryBlogCount(request, response) {
+    blogDao.queryBlogByCount(function (result) {
         response.writeHead(200, {
             "Content-Type": "text/plain;charset=UTF-8"
         });
@@ -17,12 +30,12 @@ function queryBlogCount(request, response){
     })
 }
 
-path.set("/queryBlogCount",queryBlogCount);
+path.set("/queryBlogCount", queryBlogCount);
 
 function queryBlogByPage(request, response) {
     const params = url.parse(request.url, true).query;
-    blogDao.queryBlogByPage(parseInt(params.page), parseInt(params.pageSize), function(result){
-        for(let i = 0; i < result.length; i++){
+    blogDao.queryBlogByPage(parseInt(params.page), parseInt(params.pageSize), function (result) {
+        for (let i = 0; i < result.length; i++) {
             result[i].content = result[i].content.replace(/<img[\w\W]*">/, "");
         }
         response.writeHead(200, {

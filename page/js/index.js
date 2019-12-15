@@ -26,7 +26,7 @@ const articleList = new Vue({
     data: {
         page: 1,
         pageSize: 2,
-        count: 100,
+        count: 10,
         pageNumList: [],
         articleList: [{
                 title: '平安拼团80块的beatsx',
@@ -107,7 +107,7 @@ const articleList = new Vue({
                         temp.views = result[i].views;
                         temp.tags = result[i].tags;
                         temp.id = result[i].id;
-                        temp.link = "" + result[i].id;
+                        temp.link = "/blog_detail.html?bid=" + result[i].id;
                         list.push(temp);
                     }
                     articleList.articleList = list;
@@ -129,6 +129,7 @@ const articleList = new Vue({
             const nowPage = this.page;
             const pageSize = this.pageSize;
             const totalCount = this.count;
+            const maxPage = parseInt((totalCount + pageSize - 1) / pageSize);
             let result = [];
             result.push({text: "<<", page: 1})
             if(nowPage > 2){
@@ -138,13 +139,13 @@ const articleList = new Vue({
                 result.push({text: nowPage - 1, page:nowPage - 1});
             }
             result.push({text: nowPage, page:nowPage});
-            if(nowPage + 1 <= (totalCount + pageSize - 1) / pageSize){
+            if(nowPage + 1 <= maxPage){
                 result.push({text: nowPage + 1, page: nowPage + 1});
             }
-            if(nowPage + 2 <= (totalCount + pageSize - 1) / pageSize){
+            if(nowPage + 2 <= maxPage){
                 result.push({text: nowPage + 2, page: nowPage + 2});
             }
-            result.push({text: ">>", page: parseInt((totalCount + pageSize - 1) / pageSize)})
+            result.push({text: ">>", page: maxPage})
             this.pageNumList = result;
             return result;
         }

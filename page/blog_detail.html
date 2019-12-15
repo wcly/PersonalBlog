@@ -1,17 +1,15 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>个人博客</title>
     <link rel="stylesheet" href="./css/base.css">
-    <link rel="stylesheet" href="./css/index.css">
+    <link rel="stylesheet" href="./css/blog_detail.css">
     <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
     <script src="https://cdn.bootcss.com/axios/0.19.0-beta.1/axios.js"></script>
 </head>
-
 <body>
     <header class="header">
         <div class="container">
@@ -30,22 +28,10 @@
     </header>
     <div class="content">
         <div class="content_left">
-            <div class="every_day" id="every_day">
-                <span>每日一句</span>
-                <p>{{content}}</p>
-                <!-- <p>———— Nicholas Sparks</p> -->
-            </div>
-            <div class="article_list" id="article_list">
-                <div class="article" v-for="article in articleList">
-                    <a v-bind:href="article.link" class="article_title">{{article.title}}</a>
-                    <p class="article_content">{{article.content}}</p>
-                    <div class="article_foot">发布于{{article.date}} | 浏览({{article.views}}) | Tags：{{article.tags}}</div>
-                </div>
-                <div class="page_tool">
-                    <ul>
-                        <li v-for="pageNum in pageNumList" v-on:click="jumpTo(pageNum.page)" v-bind:class="{now_page: (pageNum.text == page)}">{{pageNum.text}}</li>
-                    </ul>
-                </div>
+            <div class="blog" id="blog_detail">
+                <div class="blog_title">{{title}}</div>
+                <div class="blog_msg">作者：Wcly 标签：{{tags}} 发布于： {{ctime}} 浏览（{{views}}）</div>
+                <div class="blog_content" v-html="content"></div>
             </div>
         </div>
         <div class="content_right">
@@ -100,8 +86,7 @@
         </ul>
         <p>CopyRight ©2019-2022 个人技术博客</p>
     </footer>
-    <script src="./js/index.js"></script>
     <script src="./js/base.js"></script>
+    <script src="./js/blog_detail.js"></script>
 </body>
-
 </html>

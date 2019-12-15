@@ -48,6 +48,23 @@ function queryBlogByCount(success){
     connection.end();
 }
 
+function queryBlogById(id, success){
+    const querySql = "select * from blog where id = ?";
+    const params = [id];
+
+    const connection = dbUtil.createConnection();
+    connection.connect();
+    connection.query(querySql, params, function (error, result) {
+        if (error == null) {
+            success(result);
+        } else {
+            console.log(error)
+        }
+    })
+    connection.end();
+}
+
 module.exports.insertBlog = insertBlog
 module.exports.queryBlogByPage = queryBlogByPage
 module.exports.queryBlogByCount = queryBlogByCount
+module.exports.queryBlogById = queryBlogById
