@@ -8,20 +8,20 @@ const blogDetail = new Vue({
         views: '',
     },
     computed: {
-        
+
     },
     created() {
         const searchUrlParams = location.search.indexOf("?") > -1 ? location.search.split("?")[1].split('&') : "";
-        if(searchUrlParams == ""){
+        if (searchUrlParams == "") {
             return;
         }
         let bid = -1;
-        for(let i = 0; i < searchUrlParams.length; i++){
+        for (let i = 0; i < searchUrlParams.length; i++) {
             console.log(searchUrlParams[i].split("=")[0] == 'bid')
-            if(searchUrlParams[i].split("=")[0] == 'bid'){
-                try{
+            if (searchUrlParams[i].split("=")[0] == 'bid') {
+                try {
                     bid = parseInt(searchUrlParams[i].split("=")[1]);
-                }catch(e){
+                } catch (e) {
                     console.log(e);
                 }
             }
@@ -29,7 +29,7 @@ const blogDetail = new Vue({
         axios({
             method: 'get',
             url: '/queryBlogById?bid=' + bid,
-        }).then(function(resp){
+        }).then(function (resp) {
             console.log(resp);
             const result = resp.data.data[0];
             blogDetail.title = result.title;
@@ -37,8 +37,49 @@ const blogDetail = new Vue({
             blogDetail.tags = result.tags;
             blogDetail.ctime = result.ctime;
             blogDetail.views = result.views;
-        }).catch(function(err){
+        }).catch(function (err) {
             console.log("请求失败");
         });
     },
 });
+
+const sendComment = new Vue({
+    el: '#send_comment',
+    data: {
+
+    },
+    computed: {
+        sendComment: function () {
+            return function () {
+                const searchUrlParams = location.search.indexOf("?") > -1 ? location.search.split("?")[1].split('&') : "";
+                if (searchUrlParams == "") {
+                    return;
+                }
+                let bid = -1;
+                for (let i = 0; i < searchUrlParams.length; i++) {
+                    console.log(searchUrlParams[i].split("=")[0] == 'bid')
+                    if (searchUrlParams[i].split("=")[0] == 'bid') {
+                        try {
+                            bid = parseInt(searchUrlParams[i].split("=")[1]);
+                        } catch (e) {
+                            console.log(e);
+                        }
+                    }
+                }
+                const replay = document.getElementById("comment_reply").value;
+                const name = document.getElementById("comment_name").value;
+                const email = document.getElementById("comment_email").value;
+                const content = document.getElementById("comment_content").value;
+                axios({
+                    method: 'get',
+                    url: '/addComment?bid=' + bid + '&parent=' + replay + '&userName=' + name + '&email=' + email + '&content=' + content,
+                }).then(function (resp) {
+                    console.log(resp);
+                })
+            }
+        }
+    },
+    created: function () {
+
+    }
+})

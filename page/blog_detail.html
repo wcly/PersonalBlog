@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -10,6 +11,7 @@
     <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
     <script src="https://cdn.bootcss.com/axios/0.19.0-beta.1/axios.js"></script>
 </head>
+
 <body>
     <header class="header">
         <div class="container">
@@ -32,6 +34,21 @@
                 <div class="blog_title">{{title}}</div>
                 <div class="blog_msg">作者：Wcly 标签：{{tags}} 发布于： {{ctime}} 浏览（{{views}}）</div>
                 <div class="blog_content" v-html="content"></div>
+            </div>
+            <div class="send_comment" id="send_comment">
+                <span>发表评论</span>
+                <div>
+                    <input type="hidden" id="comment_reply" value="-1">
+                    <input type="text" placeholder="昵称" id="comment_name">
+                    <input type="text" placeholder="邮箱（评论被回复时您能收到通知）" id="comment_email">
+                </div>
+                <div>
+                    <textarea placeholder="无意义的内容我可能不会回复你" id="comment_content"></textarea>
+                </div>
+                <div>
+                    <input type="text" placeholder="验证码" id="comment_code"/>
+                </div>
+                <button v-on:click="sendComment()">提交评论</button>
             </div>
         </div>
         <div class="content_right">
@@ -89,4 +106,5 @@
     <script src="./js/base.js"></script>
     <script src="./js/blog_detail.js"></script>
 </body>
+
 </html>

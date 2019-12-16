@@ -18,6 +18,8 @@ app.get('/queryBlogCount', loader.get('/queryBlogCount'));
 
 app.get('/queryBlogById', loader.get('/queryBlogById'));
 
+app.get('/addComment', loader.get('/addComment'));
+
 app.listen(globalConfig.port, function () {
     console.log("服务器已启动");
 });
