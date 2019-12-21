@@ -47,6 +47,7 @@
                 </div>
                 <div>
                     <input type="text" placeholder="验证码" id="comment_code"/>
+                    <span v-html="vcode" v-on:click="changeCode()"></span>
                 </div>
                 <button v-on:click="sendComment()">提交评论</button>
             </div>

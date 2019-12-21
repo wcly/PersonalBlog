@@ -46,11 +46,29 @@ const blogDetail = new Vue({
 const sendComment = new Vue({
     el: '#send_comment',
     data: {
-
+        vcode: "",
+        rigthCode: '',
     },
     computed: {
+        changeCode: function(){
+            return function(){
+                axios({
+                    method: 'get',
+                    url: '/queryRandomCode'
+                }).then(function(resp){
+                    sendComment.vcode = resp.data.data.data
+                    sendComment.rigthCode = resp.data.data.text
+                })
+            }
+        },
         sendComment: function () {
             return function () {
+                const code = document.getElementById("comment_code").value;
+                console.log(code,sendComment.rigthCode)
+                if(code.toLowerCase() != sendComment.rigthCode.toLowerCase()){
+                    alert('验证码错误');
+                    return;
+                }
                 const searchUrlParams = location.search.indexOf("?") > -1 ? location.search.split("?")[1].split('&') : "";
                 if (searchUrlParams == "") {
                     return;
@@ -80,6 +98,6 @@ const sendComment = new Vue({
         }
     },
     created: function () {
-
+        this.changeCode();
     }
 })
