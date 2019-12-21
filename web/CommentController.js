@@ -9,7 +9,7 @@ const path = new Map();
 function addComment(request, response) {
     const params = url.parse(request.url, true).query;
 
-    commentDao.insertComment(parseInt(params.bid), parseInt(params.parent),
+    commentDao.insertComment(parseInt(params.bid), parseInt(params.parent), params.parentName,
         params.userName, params.email, params.content, timeUtil.getNow(), timeUtil.getNow(),
         function (result) {
             response.writeHead(200, {
@@ -36,5 +36,33 @@ function queryRandomCode(request, response) {
 }
 
 path.set('/queryRandomCode', queryRandomCode);
+
+function queryCommentsByBlogId(request, response){
+    const params = url.parse(request.url, true).query;
+
+    commentDao.queryCommentsByBlogId(parseInt(params.bid), function(result){
+        response.writeHead(200, {
+            "Content-Type": "text/plain;charset=UTF-8"
+        });
+        response.write(respUtil.writeResult('success', '查询成功', result));
+        response.end();
+    })
+}
+
+path.set('/queryCommentsByBlogId', queryCommentsByBlogId);
+
+function queryCommentCountByBlogId(request, response){
+    const params = url.parse(request.url, true).query;
+
+    commentDao.queryCommentCountByBlogId(parseInt(params.bid), function(result){
+        response.writeHead(200, {
+            "Content-Type": "text/plain;charset=UTF-8"
+        });
+        response.write(respUtil.writeResult('success', '查询成功', result));
+        response.end();
+    })
+}
+
+path.set('/queryCommentCountByBlogId', queryCommentCountByBlogId);
 
 module.exports.path = path;
