@@ -20,6 +20,8 @@ app.get('/queryRandomCode', loader.get('/queryRandomCode'));
 app.get('/queryCommentsByBlogId', loader.get('/queryCommentsByBlogId'));
 app.get('/queryCommentCountByBlogId', loader.get('/queryCommentCountByBlogId'));
 
+app.get('/queryRandomTags', loader.get('/queryRandomTags'));
+
 app.listen(globalConfig.port, function () {
     console.log("服务器已启动");
 });

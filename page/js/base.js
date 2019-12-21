@@ -1,7 +1,7 @@
 const randomTags = new Vue({
     el: "#random_tags",
     data: {
-        tags: ['ifjid', 'rtgh0', 'fght', 'df', 'gergearga', 'grger', 'greojiiojioj','ifjid', 'rtgh0', 'fght', 'df', 'gergearga', 'grger', 'greojiiojioj','ifjid', 'rtgh0', 'fght', 'df', 'gergearga', 'grger', 'greojiiojioj']
+        tags: []
     },
     computed: {
         randomColor: function (params) {
@@ -20,7 +20,16 @@ const randomTags = new Vue({
         }
     },
     created() {
-        
+        axios({
+            method: 'get',
+            url: '/queryRandomTags'
+        }).then(function(resp){
+            let result = [];
+            for(let i = 0; i < resp.data.data.length; i++){
+                result.push(resp.data.data[i].tag);
+            }
+            randomTags.tags = result;
+        });
     },
 });
 
