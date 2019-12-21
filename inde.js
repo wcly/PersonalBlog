@@ -10,7 +10,7 @@ app.post('/editEveryDay', loader.get('/editEveryDay'));
 app.get('/queryEveryDay', loader.get('/queryEveryDay'));
 
 app.post('/editBlog', loader.get('/editBlog'));
-
+app.get('/queryAllBlog', loader.get('/queryAllBlog'));
 app.get('/queryBlogByPage', loader.get('/queryBlogByPage'));
 app.get('/queryBlogCount', loader.get('/queryBlogCount'));
 app.get('/queryBlogById', loader.get('/queryBlogById'));

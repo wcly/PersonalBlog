@@ -20,6 +20,18 @@ function queryBlogById(request, response) {
 
 path.set("/queryBlogById", queryBlogById);
 
+function queryAllBlog(request, response) {
+    blogDao.queryAllBlog(function (result) {
+        response.writeHead(200, {
+            "Content-Type": "text/plain;charset=UTF-8"
+        });
+        response.write(respUtil.writeResult('success', '查询成功', result));
+        response.end();
+    })
+}
+
+path.set("/queryAllBlog", queryAllBlog);
+
 function queryBlogCount(request, response) {
     blogDao.queryBlogByCount(function (result) {
         response.writeHead(200, {
