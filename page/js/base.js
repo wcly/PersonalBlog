@@ -36,71 +36,44 @@ const randomTags = new Vue({
 const newHot = new Vue({
     el: '#new_hot',
     data: {
-        titleList: [
-            {
-                title: '这是一个连接',
-                link: 'http://www.baidu.com'
-            },
-            {
-                title: '这是一个连接',
-                link: 'http://www.baidu.com'
-            },
-            {
-                title: '这是一个连接',
-                link: 'http://www.baidu.com'
-            },
-            {
-                title: '这是一个连接',
-                link: 'http://www.baidu.com'
-            },
-            {
-                title: '这是一个连接',
-                link: 'http://www.baidu.com'
-            },
-            {
-                title: '这是一个连接',
-                link: 'http://www.baidu.com'
-            },
-            {
-                title: '这是一个连接',
-                link: 'http://www.baidu.com'
-            },
-            {
-                title: '这是一个连接',
-                link: 'http://www.baidu.com'
-            },
-            {
-                title: '这是一个连接',
-                link: 'http://www.baidu.com'
-            },
-        ]
+        titleList: []
+    },
+    created: function(){
+        axios({
+            method: 'get',
+            url: '/queryHotBlog'
+        }).then(function(resp){
+            let result = [];
+            for(let i = 0; i < resp.data.data.length; i++){
+                let temp = {};
+                temp.title = resp.data.data[i].title;
+                temp.link = '/blog_detail.html?bid=' + resp.data.data[i].id;
+                result.push(temp);
+            }
+            newHot.titleList = result;
+        });
     }
 });
 
 const newComments = new Vue({
     el: '#new_comments',
     data: {
-        commentList:[
-            {
-                name: '这是用户名',
-                data: '2019-11-25',
-                comment: "这里是评论,这里是评论,这里是评论,这里是评论,这里是评论",
-            },
-            {
-                name: '这是用户名',
-                data: '2019-11-25',
-                comment: "这里是评论,这里是评论,这里是评论,这里是评论,这里是评论",
-            },
-            {
-                name: '这是用户名',
-                data: '2019-11-25',
-                comment: "这里是评论,这里是评论,这里是评论,这里是评论,这里是评论",
-            },
-            {
-                name: '这是用户名',
-                data: '2019-11-25',
-                comment: "这里是评论,这里是评论,这里是评论,这里是评论,这里是评论",
-            },
-        ]
+        commentList:[]
+    },
+    created:function(){
+        axios({
+            method: 'get',
+            url: '/queryNewComments'
+        }).then(function(resp){
+            let result = [];
+            for(let i = 0; i < resp.data.data.length; i++){
+                let temp = {};
+                temp.name = resp.data.data[i].user_name;
+                temp.comment = resp.data.data[i].comments;
+                temp.date = resp.data.data[i].ctime;
+                result.push(temp);
+            }
+            newComments.commentList = result;
+        });
     }
 });

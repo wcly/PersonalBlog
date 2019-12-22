@@ -7,6 +7,19 @@ const url = require("url");
 
 const path = new Map();
 
+function queryHotBlog(request, response) {
+    const params = url.parse(request.url, true).query;
+    blogDao.queryHotBlog(6, function (result) {
+        response.writeHead(200, {
+            "Content-Type": "text/plain;charset=UTF-8"
+        });
+        response.write(respUtil.writeResult('success', '查询成功', result));
+        response.end();
+    })
+}
+
+path.set("/queryHotBlog", queryHotBlog);
+
 function queryBlogById(request, response) {
     const params = url.parse(request.url, true).query;
     blogDao.queryBlogById(parseInt(params.bid), function (result) {
@@ -15,6 +28,9 @@ function queryBlogById(request, response) {
         });
         response.write(respUtil.writeResult('success', '查询成功', result));
         response.end();
+        blogDao.addViews(parseInt(params.bid), function (result) {
+
+        })
     })
 }
 

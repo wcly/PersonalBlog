@@ -65,4 +65,18 @@ function queryCommentCountByBlogId(request, response){
 
 path.set('/queryCommentCountByBlogId', queryCommentCountByBlogId);
 
+function queryNewComments(request, response){
+    const params = url.parse(request.url, true).query;
+
+    commentDao.queryNewComments(6, function(result){
+        response.writeHead(200, {
+            "Content-Type": "text/plain;charset=UTF-8"
+        });
+        response.write(respUtil.writeResult('success', '查询成功', result));
+        response.end();
+    })
+}
+
+path.set('/queryNewComments', queryNewComments);
+
 module.exports.path = path;

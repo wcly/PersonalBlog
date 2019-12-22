@@ -14,11 +14,13 @@ app.get('/queryAllBlog', loader.get('/queryAllBlog'));
 app.get('/queryBlogByPage', loader.get('/queryBlogByPage'));
 app.get('/queryBlogCount', loader.get('/queryBlogCount'));
 app.get('/queryBlogById', loader.get('/queryBlogById'));
+app.get('/queryHotBlog', loader.get('/queryHotBlog'));
 
 app.get('/addComment', loader.get('/addComment'));
 app.get('/queryRandomCode', loader.get('/queryRandomCode'));
 app.get('/queryCommentsByBlogId', loader.get('/queryCommentsByBlogId'));
 app.get('/queryCommentCountByBlogId', loader.get('/queryCommentCountByBlogId'));
+app.get('/queryNewComments', loader.get('/queryNewComments'));
 
 app.get('/queryRandomTags', loader.get('/queryRandomTags'));
 

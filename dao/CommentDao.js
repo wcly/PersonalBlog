@@ -48,6 +48,23 @@ function queryCommentCountByBlogId(blogId, success) {
     connection.end();
 }
 
+function queryNewComments(size, success) {
+    const querySql = "select * from comments order by id desc limit ?;";
+    const params = [size];
+
+    const connection = dbUtil.createConnection();
+    connection.connect();
+    connection.query(querySql, params, function (error, result) {
+        if (error == null) {
+            success(result);
+        } else {
+            console.log(error)
+        }
+    })
+    connection.end();
+}
+
 module.exports.insertComment = insertComment
 module.exports.queryCommentsByBlogId = queryCommentsByBlogId
 module.exports.queryCommentCountByBlogId = queryCommentCountByBlogId
+module.exports.queryNewComments = queryNewComments
