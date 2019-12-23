@@ -28,61 +28,7 @@ const articleList = new Vue({
         pageSize: 2,
         count: 10,
         pageNumList: [],
-        articleList: [{
-                title: '平安拼团80块的beatsx',
-                content: '最近到处都在发平安拼团活动，80块的BeatsX耳机到手，第一次用这么高逼格的耳机，手感很不错，戴着略丑，音质还行，值这个价。。。如果原价盲狙的话，可能会哭晕。平安拼团beatsx耳机耳机、充电头、三对套、贴纸、一些文件',
-                date: "2019-01-01",
-                views: '101',
-                tags: 'text1 test2',
-                id: '1',
-                link: ""
-            },
-            {
-                title: '平安拼团80块的beatsx',
-                content: '最近到处都在发平安拼团活动，80块的BeatsX耳机到手，第一次用这么高逼格的耳机，手感很不错，戴着略丑，音质还行，值这个价。。。如果原价盲狙的话，可能会哭晕。平安拼团beatsx耳机耳机、充电头、三对套、贴纸、一些文件',
-                date: "2019-01-01",
-                views: '101',
-                tags: 'text1 test2',
-                id: '1',
-                link: ""
-            },
-            {
-                title: '平安拼团80块的beatsx',
-                content: '最近到处都在发平安拼团活动，80块的BeatsX耳机到手，第一次用这么高逼格的耳机，手感很不错，戴着略丑，音质还行，值这个价。。。如果原价盲狙的话，可能会哭晕。平安拼团beatsx耳机耳机、充电头、三对套、贴纸、一些文件',
-                date: "2019-01-01",
-                views: '101',
-                tags: 'text1 test2',
-                id: '1',
-                link: ""
-            },
-            {
-                title: '平安拼团80块的beatsx',
-                content: '最近到处都在发平安拼团活动，80块的BeatsX耳机到手，第一次用这么高逼格的耳机，手感很不错，戴着略丑，音质还行，值这个价。。。如果原价盲狙的话，可能会哭晕。平安拼团beatsx耳机耳机、充电头、三对套、贴纸、一些文件',
-                date: "2019-01-01",
-                views: '101',
-                tags: 'text1 test2',
-                id: '1',
-                link: ""
-            },
-            {
-                title: '平安拼团80块的beatsx',
-                content: '最近到处都在发平安拼团活动，80块的BeatsX耳机到手，第一次用这么高逼格的耳机，手感很不错，戴着略丑，音质还行，值这个价。。。如果原价盲狙的话，可能会哭晕。平安拼团beatsx耳机耳机、充电头、三对套、贴纸、一些文件',
-                date: "2019-01-01",
-                views: '101',
-                tags: 'text1 test2',
-                id: '1',
-                link: ""
-            },
-            {
-                title: '平安拼团80块的beatsx',
-                content: '最近到处都在发平安拼团活动，80块的BeatsX耳机到手，第一次用这么高逼格的耳机，手感很不错，戴着略丑，音质还行，值这个价。。。如果原价盲狙的话，可能会哭晕。平安拼团beatsx耳机耳机、充电头、三对套、贴纸、一些文件',
-                date: "2019-01-01",
-                views: '101',
-                tags: 'text1 test2',
-                id: '1',
-                link: ""
-            },
-        ],
+        articleList: [],
     },
     computed: {
         jumpTo: function(){
@@ -92,37 +38,80 @@ const articleList = new Vue({
         },
         getPage: function () {
             return function (page, pageSize) {
-                axios({
-                    method: 'get',
-                    url: `/queryBlogByPage?page=${page - 1}&pageSize=${pageSize}`
-                }).then(function (resp) {
-                    console.log(resp);
-                    const result = resp.data.data;
-                    let list = [];
-                    for (let i = 0; i < result.length; i++) {
-                        let temp = {};
-                        temp.title = result[i].title;
-                        temp.content = result[i].content;
-                        temp.date = result[i].ctime;
-                        temp.views = result[i].views;
-                        temp.tags = result[i].tags;
-                        temp.id = result[i].id;
-                        temp.link = "/blog_detail.html?bid=" + result[i].id;
-                        list.push(temp);
+                const searchUrlParams = location.search.indexOf("?") > -1 ? location.search.split("?")[1].split('&') : "";
+                let tag = "";
+                for (let i = 0; i < searchUrlParams.length; i++) {
+                    if (searchUrlParams[i].split("=")[0] == 'tag') {
+                        try {
+                            tag = searchUrlParams[i].split("=")[1];
+                        } catch (e) {
+                            console.log(e);
+                        }
                     }
-                    articleList.articleList = list;
-                    articleList.page = page;
-                }).catch(function (resp) {
-                    console.log("请求错误");
-                })
-                axios({
-                    method: 'get',
-                    url: '/queryBlogCount',
-                }).then(function(resp){
-                    console.log(resp);
-                    articleList.count = resp.data.data[0].count;
-                    articleList.generatePageTool;
-                })
+                }
+                if(tag == ''){
+                    axios({
+                        method: 'get',
+                        url: `/queryBlogByPage?page=${page - 1}&pageSize=${pageSize}`
+                    }).then(function (resp) {
+                        const result = resp.data.data;
+                        let list = [];
+                        for (let i = 0; i < result.length; i++) {
+                            let temp = {};
+                            temp.title = result[i].title;
+                            temp.content = result[i].content;
+                            temp.date = result[i].ctime;
+                            temp.views = result[i].views;
+                            temp.tags = result[i].tags;
+                            temp.id = result[i].id;
+                            temp.link = "/blog_detail.html?bid=" + result[i].id;
+                            list.push(temp);
+                        }
+                        articleList.articleList = list;
+                        articleList.page = page;
+                    }).catch(function (resp) {
+                        console.log("请求错误");
+                    })
+                    axios({
+                        method: 'get',
+                        url: '/queryBlogCount',
+                    }).then(function(resp){
+                        console.log(resp);
+                        articleList.count = resp.data.data[0].count;
+                        articleList.generatePageTool;
+                    })
+                }else{
+                    axios({
+                        method: 'get',
+                        url: `/queryByTag?page=${page - 1}&pageSize=${pageSize}&tag=${tag}`
+                    }).then(function (resp) {
+                        const result = resp.data.data;
+                        let list = [];
+                        for (let i = 0; i < result.length; i++) {
+                            let temp = {};
+                            temp.title = result[i].title;
+                            temp.content = result[i].content;
+                            temp.date = result[i].ctime;
+                            temp.views = result[i].views;
+                            temp.tags = result[i].tags;
+                            temp.id = result[i].id;
+                            temp.link = "/blog_detail.html?bid=" + result[i].id;
+                            list.push(temp);
+                        }
+                        articleList.articleList = list;
+                        articleList.page = page;
+                    }).catch(function (resp) {
+                        console.log("请求错误");
+                    })
+                    axios({
+                        method: 'get',
+                        url: `/queryByTagCount?tag=${tag}`,
+                    }).then(function(resp){
+                        console.log(resp);
+                        articleList.count = resp.data.data[0].count;
+                        articleList.generatePageTool;
+                    })
+                }
             }
         },
         generatePageTool: function () {

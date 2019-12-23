@@ -5,7 +5,7 @@ const randomTags = new Vue({
     },
     computed: {
         randomColor: function (params) {
-            return function(){
+            return function () {
                 const red = Math.random() * 255 + 50;
                 const green = Math.random() * 255 + 50;
                 const blue = Math.random() * 255 + 50;
@@ -13,7 +13,7 @@ const randomTags = new Vue({
             }
         },
         randomSize: function (params) {
-            return function(){
+            return function () {
                 const size = Math.random() * 20 + 12
                 return `${size}px`
             }
@@ -23,10 +23,13 @@ const randomTags = new Vue({
         axios({
             method: 'get',
             url: '/queryRandomTags'
-        }).then(function(resp){
+        }).then(function (resp) {
             let result = [];
-            for(let i = 0; i < resp.data.data.length; i++){
-                result.push(resp.data.data[i].tag);
+            for (let i = 0; i < resp.data.data.length; i++) {
+                result.push({
+                    text: resp.data.data[i].tag,
+                    link: `/?tag=` + resp.data.data[i].tag
+                });
             }
             randomTags.tags = result;
         });
@@ -38,13 +41,13 @@ const newHot = new Vue({
     data: {
         titleList: []
     },
-    created: function(){
+    created: function () {
         axios({
             method: 'get',
             url: '/queryHotBlog'
-        }).then(function(resp){
+        }).then(function (resp) {
             let result = [];
-            for(let i = 0; i < resp.data.data.length; i++){
+            for (let i = 0; i < resp.data.data.length; i++) {
                 let temp = {};
                 temp.title = resp.data.data[i].title;
                 temp.link = '/blog_detail.html?bid=' + resp.data.data[i].id;
@@ -58,15 +61,15 @@ const newHot = new Vue({
 const newComments = new Vue({
     el: '#new_comments',
     data: {
-        commentList:[]
+        commentList: []
     },
-    created:function(){
+    created: function () {
         axios({
             method: 'get',
             url: '/queryNewComments'
-        }).then(function(resp){
+        }).then(function (resp) {
             let result = [];
-            for(let i = 0; i < resp.data.data.length; i++){
+            for (let i = 0; i < resp.data.data.length; i++) {
                 let temp = {};
                 temp.name = resp.data.data[i].user_name;
                 temp.comment = resp.data.data[i].comments;

@@ -65,6 +65,8 @@ function queryBlogByPage(request, response) {
     blogDao.queryBlogByPage(parseInt(params.page), parseInt(params.pageSize), function (result) {
         for (let i = 0; i < result.length; i++) {
             result[i].content = result[i].content.replace(/<img[\w\W]*">/, "");
+            result[i].content = result[i].content.replace(/<img[\w\W][1,5]">/g, "");
+            result[i].content = result[i].content.substring(0, 300);
         }
         response.writeHead(200, {
             "Content-Type": "text/plain;charset=UTF-8"

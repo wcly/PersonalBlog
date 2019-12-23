@@ -24,6 +24,9 @@ app.get('/queryNewComments', loader.get('/queryNewComments'));
 
 app.get('/queryRandomTags', loader.get('/queryRandomTags'));
 
+app.get('/queryByTag', loader.get('/queryByTag'));
+app.get('/queryByTagCount', loader.get('/queryByTagCount'));
+
 app.listen(globalConfig.port, function () {
     console.log("服务器已启动");
 });
